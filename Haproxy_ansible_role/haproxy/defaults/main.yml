@@ -1,0 +1,4 @@
+---
+# defaults file for haproxy
+new_server: "12.89.09.90"
+port: "90"
