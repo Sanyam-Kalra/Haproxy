@@ -1,0 +1,14 @@
+- name: Updating system.......
+  apt:
+   update_cache: yes
+ 
+- name: Your OS family is Debian Installing Haproxy
+  apt:
+   name: haproxy
+   state: present
+
+- name: Updating required configrations
+  copy:
+   src: /home/ubuntu/work/ansible_assignment5/haproxy/templates/haproxy.cfg.j2
+   dest: /etc/haproxy/haproxy.cfg
+  notify: Restarting haproxy
