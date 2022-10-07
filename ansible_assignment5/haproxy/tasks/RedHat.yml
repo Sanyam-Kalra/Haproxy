@@ -1,0 +1,15 @@
+- name: Updating system.......
+  yum:
+   update_cache: yes
+ 
+- name: Your OS family is RedHat Installing Haproxy
+  yum:
+   name: haproxy
+   state: present
+
+- name: Updating required configrations
+  copy:
+   src: haproxy.redhat.cfg
+   dest: /etc/haproxy/haproxy.cfg
+  notify: Restarting haproxy
+  
