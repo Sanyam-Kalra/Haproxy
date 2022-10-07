@@ -1,0 +1,15 @@
+---
+# tasks file for haproxy
+- name: check version support
+  ansible.builtin.fail:
+    msg: "HAProxy version {{ haproxy_version }} is not supported"
+  when: haproxy_version | string not in haproxy_versions_supported
+
+- name: Initiating task if ansible_os_family = Debian
+  when: ansible_os_family=="Debian"
+  include_tasks: Debian.yml
+  
+- name: Initiating task if ansible_os_family = RedHat
+  when: ansible_os_family=="RedHat"
+  include_tasks: RedHat.yml
+

@@ -1,0 +1,21 @@
+---
+# vars file for haproxy
+
+#supported versions of Haproxy as per haproxy.org
+haproxy_versions_supported:
+  - '1.8'
+  - '2.0'
+  - '2.2'
+  - '2.4'
+  - '2.5'
+  - '2.6'
+  - '2.7'
+haproxy_version_full: 2.4.18
+haproxy_version: 2.4
+new_server: 
+ports: 80
+server_name: "wbs4.com"
+method: "roundrobin"
+status_url: "haproxy_status"
+haproxy_user: sanyam
+haproxy_group: sanyam_group

@@ -1,0 +1,85 @@
+
+- name: Updating system.......
+  apt:
+    update_cache: yes
+
+- name: install essentials/dependencies
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present   
+  loop:
+      - build-essential 
+      - libssl-dev
+      - libpcre++-dev
+      - tcl
+      - zlib*
+
+- name: create Haproxy group
+  group:
+    name: "{{ haproxy_group }}"
+    state: present
+
+- name: creating a haproxy user
+  user:
+    name: "{{ haproxy_user }}"
+    state: present
+    group: "{{ haproxy_group }}"
+    shell: /sbin/nologin
+
+- name: unarchive haproxy
+  unarchive: 
+    src: https://www.haproxy.org/download/{{ haproxy_version }}/src/haproxy-{{ haproxy_version_full }}.tar.gz
+    dest: /tmp/
+    owner: "{{ haproxy_user }}"
+    group: "{{ haproxy_group }}"
+    remote_src: yes
+
+- name: Executing Dependencies using make
+  ansible.builtin.command:
+    cmd: make TARGET=linux-glibc CPU=native USE_STATIC_PCRE=1 USE_OPENSSL=1 USE_ZLIB=1
+    chdir: /tmp/haproxy-{{ haproxy_version_full }}
+
+- name: install
+  ansible.builtin.command:
+    cmd: sudo make install
+    chdir: /tmp/haproxy-{{ haproxy_version_full }}
+
+- name: Creating Haproxy init.d Uptime Script
+  ansible.builtin.file:
+    path: /etc/init.d/haproxy
+    state: touch
+    mode: 0755
+
+- name: Copying Init.d script
+  copy:
+   src: haproxy
+   dest: /etc/init.d/haproxy
+   owner: "{{ haproxy_user }}"
+   group: "{{ haproxy_group }}"
+   mode: 0755
+
+- name: Creating Directory of Haproxy
+  ansible.builtin.file:
+    path: /etc/haproxy
+    state: directory
+
+- name: Creating service file of Haproxy
+  ansible.builtin.file:
+    path: /etc/haproxy/haproxy.cfg
+    state: touch
+
+- name: Updating required configrations
+  template:
+    src: haproxy.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0644
+  notify: start haproxy
+
+
+
+
+
+  
+ 

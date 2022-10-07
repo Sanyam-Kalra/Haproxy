@@ -1,0 +1,5 @@
+- hosts: all
+  name: calling roles
+  become: true
+  roles:
+        - { role: haproxy }
