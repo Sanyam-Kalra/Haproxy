@@ -1,0 +1,28 @@
+Assignment 4
+
+Category
+
+AWS Resources
+Terraform
+Jenkins
+
+
+Details
+In this assignment, we will create an end-to-end infrastructure using Terraform resources.
+
+Must Do
+
+Take reference to your previously created architecture diagram and create terraform code to implement the complete infrastructure over AWS.
+Make sure the code should be based on the principle of re-usability. Try to use vars and tfvars
+All the required details should be part of the output information
+
+
+Good to Do
+
+Create a Jenkins automation pipeline to implement all the terraform phases i.e. validation, planning, and creation.
+
+
+References
+
+https://www.terraform.io/docs
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
