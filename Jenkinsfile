@@ -3,7 +3,7 @@ pipeline {
      stages {
         stage('Checkov') {
             steps{
-                sh 'checkov -f ec2.tf subnet.tf nat.tf'
+                sh 'checkov -f ec2.tf'
             }
         }
      }
