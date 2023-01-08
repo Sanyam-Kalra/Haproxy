@@ -3,6 +3,7 @@ pipeline {
      stages {
         stage('Checkov') {
             steps{
+                cleanWs()
                 sh 'checkov -f /ec2.tf'
             }
         }
